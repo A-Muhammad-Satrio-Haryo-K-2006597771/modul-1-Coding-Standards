@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -44,7 +45,10 @@ public class ProductController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editProductPost(@ModelAttribute Product product, Model model) {
-        return "redirect:list";
+    public String editProductPost(@PathVariable String id, @ModelAttribute Product product) {
+        Product existingProduct = service.findById(id);
+        service.edit(existingProduct,
+                Optional.ofNullable(product.getProductName()), Optional.of(product.getProductQuantity()));
+        return "redirect:/product/list";
     }
 }
