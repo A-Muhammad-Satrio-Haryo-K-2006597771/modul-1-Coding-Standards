@@ -48,4 +48,8 @@ public class ProductServiceImpl implements ProductService {
         newProductName.ifPresent(product::setProductName);
         newProductQuantity.ifPresent(product::setProductQuantity);
     }
+
+    public void delete(Product product) {
+        productRepository.delete(product);
+    }
 }

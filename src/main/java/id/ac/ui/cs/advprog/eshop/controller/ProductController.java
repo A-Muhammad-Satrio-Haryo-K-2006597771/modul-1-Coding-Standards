@@ -51,4 +51,11 @@ public class ProductController {
                 Optional.ofNullable(product.getProductName()), Optional.of(product.getProductQuantity()));
         return "redirect:/product/list";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable String id) {
+        Product product = service.findById(id);
+        service.delete(product);
+        return "redirect:/product/list";
+    }
 }
