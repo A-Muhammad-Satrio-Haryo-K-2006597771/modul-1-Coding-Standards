@@ -26,6 +26,9 @@
             <td>
                 <a class="btn btn-primary btn-sm mb-3" th:href="@{/product/edit/{id}(id=${product.productId})}">Edit Product</a>
             </td>
+            <td>
+                <a class="btn btn-primary btn-sm mb-3" th:href="@{/product/delete/{id}(id=${product.productId})}">Delete Product</a>
+            </td>
         </tr>
         </tbody>
     </table>
