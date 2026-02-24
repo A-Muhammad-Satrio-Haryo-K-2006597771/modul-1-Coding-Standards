@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -34,5 +35,27 @@ public class ProductController {
         List<Product> allProduct = service.findAll();
         model.addAttribute("products", allProduct);
         return "ProductList";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProductPage(@PathVariable String id, Model model) {
+        Product product = service.findById(id);
+        model.addAttribute("product", product);
+        return "EditProduct";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProductPost(@PathVariable String id, @ModelAttribute Product product) {
+        Product existingProduct = service.findById(id);
+        service.edit(existingProduct,
+                Optional.ofNullable(product.getProductName()), Optional.of(product.getProductQuantity()));
+        return "redirect:/product/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable String id) {
+        Product product = service.findById(id);
+        service.delete(product);
+        return "redirect:/product/list";
     }
 }
